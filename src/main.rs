@@ -1,6 +1,6 @@
 mod game;
 mod terminal;
-mod util;
+mod menu;
 
 use std::io;
 

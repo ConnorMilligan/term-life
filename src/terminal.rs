@@ -3,6 +3,7 @@ use std::io::{self, Write};
 use crossterm::{
     cursor,
     terminal,
+    style::{self, Colors, SetColors},
     QueueableCommand,
 };
 
@@ -15,6 +16,7 @@ pub fn setup_terminal() -> io::Result<()> {
     stdout.queue(terminal::Clear(terminal::ClearType::All))?
         .queue(cursor::Hide)?
         .queue(terminal::EnterAlternateScreen)?
+        .queue(SetColors(Colors::new(style::Color::White, style::Color::Black)))?
         .flush()?;
 
     Ok(())

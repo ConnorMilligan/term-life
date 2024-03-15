@@ -1,14 +1,11 @@
-use std::io::{self, Write};
-use crossterm::{
-    cursor,
-    style,
-    QueueableCommand
-};
-use crate::util::read_char;
+use std::io;
+use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyEventKind};
 
-struct Game {
-    stdout: std::io::Stdout,
-    running: bool,
+use crate::menu::draw_menu;
+
+pub struct Game {
+    pub stdout: std::io::Stdout,
+    pub running: bool,
 }
 
 pub fn game_loop() -> io::Result<()> {
@@ -26,9 +23,7 @@ pub fn game_loop() -> io::Result<()> {
 }
 
 fn draw(game: &mut Game) -> io::Result<()> {
-    game.stdout.queue(cursor::MoveTo(0, 0))?;
-    game.stdout.queue(style::Print("Hello, world!"))?;
-    game.stdout.flush()?;
+    draw_menu(game)?;
     Ok(())
 }
 
@@ -40,4 +35,18 @@ fn take_input(game: &mut Game) -> io::Result<()> {
         _ => {}
     }
     Ok(())
+}
+
+fn read_char() -> std::io::Result<char> {
+    loop {
+        if let Ok(Event::Key(KeyEvent {
+            code: KeyCode::Char(c),
+            kind: KeyEventKind::Press,
+            modifiers: _,
+            state: _,
+        })) = event::read()
+        {
+            return Ok(c);
+        }
+    }
 }
