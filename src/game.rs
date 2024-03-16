@@ -1,4 +1,4 @@
-use std::{io::{self, Write}, thread::sleep, time::Duration};
+use std::{io::{self, Write}, time::Duration};
 use crossterm::{
     event::{self, poll, Event, KeyCode, KeyEvent, KeyEventKind},
     QueueableCommand,

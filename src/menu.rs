@@ -33,8 +33,8 @@ pub fn draw_menu(game: &mut Game) -> io::Result<()> {
             .queue(cursor::MoveTo(width, h))?
             .queue(Print("█"))?; 
     }
-    for w in 0..width {
-        if w < 2 || w >= 16 {
+    for w in 1..width {
+        if (w < 2 || w >= 16) && w < width-10 {
             game.stdout.queue(cursor::MoveTo(w, 0))?
                 .queue(Print("█"))?;
         }
